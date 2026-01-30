@@ -3,13 +3,22 @@ import { extractUnits } from "./extractUnits";
 import { UNIT_SUGGESTION_PROMPT_TEMPLATE } from "./unitSuggestionPrompt";
 import { N_UNITS_TO_GENERATE } from "./constants";
 
-export async function generateUnitSuggestions(
-  type: "theme" | "context",
-  discipline: string,
-  grade: string,
-  bnccGuidelines: string,
-  numberOfUnits: number = N_UNITS_TO_GENERATE
-): Promise<string[]> {
+// Criar uma interface para os parâmetros
+interface GenerateUnitSuggestionsParams {
+  type: "theme" | "context";
+  discipline: string;
+  grade: string;
+  bnccGuidelines: string;
+  numberOfUnits?: number; // opcional, padrão N_UNITS_TO_GENERATE
+}
+
+export async function generateUnitSuggestions({
+  type,
+  discipline,
+  grade,
+  bnccGuidelines,
+  numberOfUnits = N_UNITS_TO_GENERATE,
+}: GenerateUnitSuggestionsParams): Promise<string[]> {
   const llm = Settings.llm;
 
   const prompt =

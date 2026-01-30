@@ -9,9 +9,7 @@ const nextConfig = JSON.parse(fs.readFileSync("./next.config.json", "utf-8"));
 // Adiciona webpack customizado
 nextConfig.webpack = webpack;
 
-// ⚡ Adiciona export estático
-nextConfig.output = "export";       // necessário para next export
-nextConfig.trailingSlash = true;    // importante para roteamento estático
+
 
 // Aplica modificações do LlamaIndex
 export default withLlamaIndex(nextConfig);

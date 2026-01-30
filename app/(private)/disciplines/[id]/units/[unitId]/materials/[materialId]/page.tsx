@@ -23,7 +23,6 @@ const MaterialDetailsPage = () => {
 
  useEffect(() => {
   const loadMaterial = async () => {
-    // 1️⃣ tenta no estado
     const found = actions.getMaterialById(materialId as string);
     if (found) {
       setMaterial(found);
@@ -31,11 +30,9 @@ const MaterialDetailsPage = () => {
       return;
     }
 
-    // 2️⃣ fallback: busca direto no banco
-    const fromDb =
-      await supabaseMaterialRepository.getMaterialById(
-        materialId as string
-      );
+    const fromDb = await supabaseMaterialRepository.getMaterialById(
+      materialId as string
+    );
 
     if (fromDb) {
       setMaterial(fromDb);
@@ -44,7 +41,8 @@ const MaterialDetailsPage = () => {
   };
 
   loadMaterial();
-}, [materialId]);
+}, [materialId, actions]);
+
 
   if (!material) {
     return <p>Material não encontrado.</p>;

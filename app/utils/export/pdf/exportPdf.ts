@@ -95,22 +95,24 @@ export function exportPdf(material: Material): Buffer {
   }
 
   // Quebra em linhas considerando largura da página
-  const rawLines = material.content.split("\n");
-  for (let rawLine of rawLines) {
-    const wrappedLines = pdf.splitTextToSize(rawLine, pageWidth - margin * 2);
+  // Quebra em linhas considerando largura da página
+const rawLines = material.content.split("\n");
+for (const rawLine of rawLines) { // <--- trocar let por const
+  const wrappedLines = pdf.splitTextToSize(rawLine, pageWidth - margin * 2);
 
-    for (let line of wrappedLines) {
-      if (y > 270) {
-        pdf.addPage();
-        pageNumber++;
-        applyPdfTemplate(pdf, material.title, pageNumber);
-        y = 35;
-      }
-
-      renderLine(line, margin, y);
-      y += 6;
+  for (const line of wrappedLines) { // <--- trocar let por const
+    if (y > 270) {
+      pdf.addPage();
+      pageNumber++;
+      applyPdfTemplate(pdf, material.title, pageNumber);
+      y = 35;
     }
+
+    renderLine(line, margin, y);
+    y += 6;
   }
+}
+
 
   return Buffer.from(pdf.output("arraybuffer"));
 }
